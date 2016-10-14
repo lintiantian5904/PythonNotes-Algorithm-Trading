@@ -1,0 +1,240 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+ 
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,            
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+ 
+\begin{document}
+
+\begin{lstlisting}[language=Python, caption=Python example]
+import pandas as pd
+
+
+def test_run():
+    """Function called by Test Run."""
+    df = pd.read_csv("data/AAPL.csv")
+    print df.head()
+
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Read and Slicing data
+\begin{lstlisting}[language=Python, caption=Python example]
+# Reading in a CSV file
+# You can read in the contents of a CSV (comma-separated values) file into a Pandas dataframe using:
+df = pd.read_csv(<filename>)
+
+# Selecting rows from a dataframe:
+First 5 rows: df.head()
+Last 5 rows: df.tail()
+
+# Similarly, last n rows: 
+df.tail(n)
+
+# Reading Rows
+# from row 10 to 20:
+df[10:21] 
+\end{lstlisting}
+
+
+\# Return the statistics
+\begin{lstlisting}[language=Python, caption=Python example]
+# calculate the maximun
+
+"""Compute max price"""
+
+import pandas as pd
+
+def get_max_close(symbol):
+    """Return the max closing value for stock indicated by symbol.
+    
+    Note: Data for a stock is stored in file: data/<symbol>.csv
+    """
+    df = pd.read_csv("data/{}.csv".format(symbol))  # read in data
+    return df['close'].max()
+     # return df['Volume'].mean()
+
+
+def test_run():
+    """Function called by Test Run."""
+    for symbol in ['AAPL', 'IBM']:
+        print "Max close"
+        print symbol, get_max_close(symbol)
+
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Plot data
+\begin{lstlisting}[language=Python, caption=Python example]
+"""Plot High prices for IBM"""
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def test_run():
+    df = pd.read_csv("data/IBM.csv")
+    df['High'].plot()
+    # df['Adj Close'].plot()
+    plt.show()  # must be called to show plots
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Plot two columns
+\begin{lstlisting}[language=Python, caption=Python example]
+df[['Adj Close','High']]].plot()
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python, caption=Python example]
+
+\end{lstlisting}
+
+
+
+\end{document}
