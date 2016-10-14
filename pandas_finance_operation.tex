@@ -1,0 +1,501 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+ 
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,            
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+ 
+\begin{document}
+
+\begin{lstlisting}[language=Python]
+import pandas as pd
+
+
+def test_run():
+    """Function called by Test Run."""
+    df = pd.read_csv("data/AAPL.csv")
+    print df.head()
+
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Read and Slicing data
+\begin{lstlisting}[language=Python]
+# Reading in a CSV file
+# You can read in the contents of a CSV (comma-separated values) file into a Pandas dataframe using:
+df = pd.read_csv(<filename>)
+
+# Selecting rows from a dataframe:
+First 5 rows: df.head()
+Last 5 rows: df.tail()
+
+# Similarly, last n rows: 
+df.tail(n)
+
+# Reading Rows
+# from row 10 to 20:
+df[10:21] 
+\end{lstlisting}
+
+
+\# Return the statistics
+\begin{lstlisting}[language=Python]
+# calculate the maximun
+
+"""Compute max price"""
+
+import pandas as pd
+
+def get_max_close(symbol):
+    """Return the max closing value for stock indicated by symbol.
+    
+    Note: Data for a stock is stored in file: data/<symbol>.csv
+    """
+    df = pd.read_csv("data/{}.csv".format(symbol))  # read in data
+    return df['close'].max()
+     # return df['Volume'].mean()
+
+
+def test_run():
+    """Function called by Test Run."""
+    for symbol in ['AAPL', 'IBM']:
+        print "Max close"
+        print symbol, get_max_close(symbol)
+
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Plot data
+\begin{lstlisting}[language=Python]
+"""Plot High prices for IBM"""
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def test_run():
+    df = pd.read_csv("data/IBM.csv")
+    df['High'].plot()
+    # df['Adj Close'].plot()
+    plt.show()  # must be called to show plots
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Plot two columns
+\begin{lstlisting}[language=Python]
+df[['Adj Close','High']]].plot()
+\end{lstlisting}
+
+\# Create an empty dataframe
+\begin{lstlisting}[language=Python]
+import pandas as pd
+
+def test_run():
+    start_date='2010-01-01'
+    end_date='2012-12-31'
+    dates=pd.date_range(start_date, end_date)
+
+    # Create an empty data frame
+    df1=pd.DataFrame(index=dates)
+
+    # Read the new data
+    dfSPY=pandas.read_csv("data/SPY.csv", index_col="Date", parse_date=True, usecols=['Date','Adj Close'],na_values=['nan'])
+
+    # Join the two dataframe using dataframe.join()
+    df1=df1.join(dfSPY)
+
+    # Drop the n.a.
+    df1=df1.dropna()
+    print df1
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Alternatively, last join and drop function can be shorted as 
+\begin{lstlisting}[language=Python]
+df1=df1.join(dfSPY, how='inner')
+\end{lstlisting}
+
+Such that, the last code block could be wrote as
+\begin{lstlisting}[language=Python]
+import pandas as pd
+
+def test_run():
+    start_date='2010-01-01'
+    end_date='2012-12-31'
+    dates=pd.date_range(start_date, end_date)
+
+    # Create an empty data frame
+    df1=pd.DataFrame(index=dates)
+
+    # Read the new data
+    dfSPY=pandas.read_csv("data/SPY.csv", index_col="Date", parse_date=True, usecols=['Date','Adj Close'],na_values=['nan'])
+
+    # Join the two dataframe using dataframe.join() and drop the nan
+    df1=df1.join(dfSPY, how='inner')
+
+    # Rename column name to avoid clash
+    dfSPY=dfSPY.rename(columns={'Adj Close':'SPY'})
+
+    # Read in more stocks
+    symbols=['IBM','GOOG','GLD']
+    for symbol in symbols:
+        df_temp=pandas.read_csv("data/{}.csv".format(symbol), index_col="Date", parse_date=True, usecols=['Date','Adj Close'],na_values=['nan'])
+
+        # Rename column name to avoid clash
+        dfSPY=dfSPY.rename(columns={'Adj Close': symbol})
+        df=df1.join(df_temp)
+
+    print df
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Utility Function for reading data:
+\begin{lstlisting}[language=Python]
+"""Utility functions"""
+
+import os
+import pandas as pd
+
+def symbol_to_path(symbol, base_dir="data"):
+    """Return CSV file path given ticker symbol."""
+    return os.path.join(base_dir, "{}.csv".format(str(symbol)))
+
+
+def get_data(symbols, dates):
+    """Read stock data (adjusted close) for given symbols from CSV files."""
+    df = pd.DataFrame(index=dates)
+    if 'SPY' not in symbols:  # add SPY for reference, if absent
+        symbols.insert(0, 'SPY')
+
+    for symbol in symbols:
+        df_temp=pd.read_csv(symbol_to_path(symbol), index_col="Date", parse_dates=True, usecols=['Date','Adj Close'],na_values=['nan'])
+        df_temp=df_temp.rename(columns={'Adj Close': symbol})
+        df=df.join(df_temp)
+        df=df.dropna()
+
+    return df
+
+def test_run():
+    # Define a date range
+    dates = pd.date_range('2010-01-22', '2010-01-26')
+
+    # Choose stock symbols to read
+    symbols = ['GOOG', 'IBM', 'GLD']
+    
+    # Get stock data
+    df = get_data(symbols, dates)
+    print df
+
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Slicing DataFrame
+\begin{lstlisting}[language=Python]
+# Slice by row ranges:
+df.ix['2001-01-01':'2001-01-31']
+
+# Slice by column:
+df['GOOG']
+df[['GOOG','IBM']]
+
+# Slice by row and column:
+df.ix['2001-01-01':'2001-01-31',['GOOG','IBM']]
+\end{lstlisting}
+
+\# Plotting multiple stocks
+\begin{lstlisting}[language=Python]
+import matplotlib.pyplot as plt
+
+def plot_date(df,title="Stock Prices"):
+    '''plot stock prices'''
+    ax=df.plot(title=title,fontsize=2)
+    ax.set_xlable("Date")
+    ax.set_ylable("Price")
+    plt.show()
+\end{lstlisting}
+
+\# Slice and Plot
+\begin{lstlisting}[language=Python]
+"""Slice and plot"""
+
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+def plot_selected(df, columns, start_index, end_index):
+    """Plot the desired columns over index values in the given range."""
+    plot_data(df.ix[start_index:end_index,columns], title='Selected Data')
+
+def symbol_to_path(symbol, base_dir="data"):
+    """Return CSV file path given ticker symbol."""
+    return os.path.join(base_dir, "{}.csv".format(str(symbol)))
+
+def get_data(symbols, dates):
+    """Read stock data (adjusted close) for given symbols from CSV files."""
+    df = pd.DataFrame(index=dates)
+    if 'SPY' not in symbols:  # add SPY for reference, if absent
+        symbols.insert(0, 'SPY')
+
+    for symbol in symbols:
+        df_temp = pd.read_csv(symbol_to_path(symbol), index_col='Date',
+                parse_dates=True, usecols=['Date', 'Adj Close'], na_values=['nan'])
+        df_temp = df_temp.rename(columns={'Adj Close': symbol})
+        df = df.join(df_temp)
+        if symbol == 'SPY':  # drop dates SPY did not trade
+            df = df.dropna(subset=["SPY"])
+
+    return df
+
+
+def plot_data(df, title="Stock prices"):
+    """Plot stock prices with a custom title and meaningful axis labels."""
+    ax = df.plot(title=title, fontsize=12)
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Price")
+    plt.show()
+
+
+def test_run():
+    # Define a date range
+    dates = pd.date_range('2010-01-01', '2010-12-31')
+
+    # Choose stock symbols to read
+    symbols = ['GOOG', 'IBM', 'GLD']  # SPY will be added in get_data()
+    
+    # Get stock data
+    df = get_data(symbols, dates)
+
+    # Slice and plot
+    plot_selected(df, ['SPY', 'IBM'], '2010-03-01', '2010-04-01')
+
+
+if __name__ == "__main__":
+    test_run()
+\end{lstlisting}
+
+\# Normalizing data
+\begin{lstlisting}[language=Python]
+def normalize_data(df):
+    """Normalizing the stock price using the 1st row"""
+    return df/df.ix[0,:]
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=Python]
+
+\end{lstlisting}
+
+
+
+\end{document}

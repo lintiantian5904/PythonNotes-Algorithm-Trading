@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.8.27)  14 OCT 2016 13:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.8.27)  14 OCT 2016 18:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**python_trading_notes1.tex
-(./python_trading_notes1.tex
+**pandas_finance_operation.tex
+(./pandas_finance_operation.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
@@ -385,8 +385,8 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count95
 ))
-No file python_trading_notes1.aux.
-\openout1 = `python_trading_notes1.aux'.
+No file pandas_finance_operation.aux.
+\openout1 = `pandas_finance_operation.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
 LaTeX Font Info:    ... okay on input line 33.
@@ -440,26 +440,26 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
  [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-
-(./python_trading_notes1.aux) ) 
+ [4] [5]
+(./pandas_finance_operation.aux) ) 
 Here is how much of TeX's memory you used:
- 3142 strings out of 493014
- 39778 string characters out of 6133351
- 232279 words of memory out of 5000000
- 6704 multiletter control sequences out of 15000+600000
+ 3183 strings out of 493014
+ 40318 string characters out of 6133351
+ 280207 words of memory out of 5000000
+ 6745 multiletter control sequences out of 15000+600000
  5463 words of font info for 20 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 26i,5n,42p,212b,1395s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2016/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmsy8.pfb>
-Output written on python_trading_notes1.pdf (3 pages, 64369 bytes).
+ 26i,6n,42p,215b,1673s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2016/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy8.pfb>
+Output written on pandas_finance_operation.pdf (5 pages, 81434 bytes).
 PDF statistics:
- 34 PDF objects out of 1000 (max. 8388607)
- 23 compressed objects within 1 object stream
+ 40 PDF objects out of 1000 (max. 8388607)
+ 27 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
